@@ -1,6 +1,7 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 import { legacyData, sentientData } from '../../simulator'
+import ControlPanel from './ControlPanel'
 import {
   Chart as ChartJS,
   LineElement,
@@ -68,6 +69,7 @@ export default function VisualizerPage() {
   return (
     <div className="p-6 space-y-12">
       <h1 className="text-2xl font-bold">SentientZone Simulation Comparison</h1>
+      <ControlPanel />
 
       {/* Energy Usage */}
       <div>

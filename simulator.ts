@@ -3,6 +3,9 @@
  * Simulates HVAC runtime, temperature drift, occupancy, and energy usage.
  */
 
+declare const require: any
+declare const module: any
+
  type Room = 'TherapyA' | 'TherapyB' | 'Waiting' | 'Admin'
  
  type RoomState = {
@@ -52,9 +55,9 @@
     }, {} as Record<Room, RoomState>),
   }
  
-   for (let i = 0; i < TOTAL_MINUTES; i++) {
-     state.minute = i
-     state.externalTemp = 72 + 10 * Math.sin((2 * Math.PI * (i % MINUTES_PER_DAY)) / MINUTES_PER_DAY)
+  for (let i = 0; i < TOTAL_MINUTES; i++) {
+    state.minute = i
+    state.externalTemp = 90 + 10 * Math.sin((2 * Math.PI * (i % MINUTES_PER_DAY)) / MINUTES_PER_DAY)
  
      for (const room of ROOMS) {
        const roomState = state.rooms[room]
@@ -74,11 +77,11 @@
        }
  
        // Determine control
-       const target = isSentient
-         ? roomState.occupied
-           ? 72
-           : 76 // idle setpoint
-         : 72 // always fixed in legacy
+      const target = isSentient
+        ? roomState.occupied
+          ? 72
+          : 82 // idle setpoint
+        : 72 // always fixed in legacy
  
        roomState.targetTemp = target
  
@@ -103,5 +106,14 @@
 // Usage:
 export const legacyData = simulate(false)
 export const sentientData = simulate(true)
+
+if (require.main === module) {
+  const legacyEnergy = legacyData[legacyData.length - 1].energyUsed_kWh
+  const sentientEnergy = sentientData[sentientData.length - 1].energyUsed_kWh
+  const reduction = ((legacyEnergy - sentientEnergy) / legacyEnergy) * 100
+  console.log(`Legacy energy: ${legacyEnergy.toFixed(2)} kWh`)
+  console.log(`SentientZone energy: ${sentientEnergy.toFixed(2)} kWh`)
+  console.log(`Reduction: ${reduction.toFixed(2)}%`)
+}
 
 // Export, analyze, or chart legacyData vs sentientData

@@ -1,6 +1,7 @@
 import React from 'react'
 import { legacyData, sentientData } from '../../simulator'
 import { saveAs } from 'file-saver'
+import { exportSimulationSummaryPDF } from './exportPdf'
 
 const ROOMS = ['TherapyA', 'TherapyB', 'Waiting', 'Admin'] as const
 
@@ -54,7 +55,7 @@ export default function ControlPanel() {
   const comfortDelta = totalComfortLegacy - totalComfortSentient
 
   return (
-    <div className="p-4 border rounded-md shadow-sm bg-white mb-8">
+    <div data-sim-summary className="p-4 border rounded-md shadow-sm bg-white mb-8">
       <h2 className="text-xl font-bold mb-2">Simulation Summary</h2>
       <ul className="space-y-1 text-sm">
         <li><strong>Total Energy Saved:</strong> {energySaved.toFixed(2)} kWh</li>
@@ -74,6 +75,12 @@ export default function ControlPanel() {
           className="px-3 py-1 border rounded bg-green-100 hover:bg-green-200"
         >
           Export SentientZone CSV
+        </button>
+        <button
+          onClick={exportSimulationSummaryPDF}
+          className="px-3 py-1 border rounded bg-blue-100 hover:bg-blue-200"
+        >
+          Download PDF Summary
         </button>
       </div>
     </div>

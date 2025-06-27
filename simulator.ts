@@ -102,8 +102,8 @@
    return log
  }
  
- // Usage:
- const legacyData = simulate(false)
- const sentientData = simulate(true)
- 
- // Export, analyze, or chart legacyData vs sentientData
+// Usage:
+export const legacyData = simulate(false)
+export const sentientData = simulate(true)
+
+// Export, analyze, or chart legacyData vs sentientData

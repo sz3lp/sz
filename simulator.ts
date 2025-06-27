@@ -191,4 +191,3 @@ if (require.main === module) {
   console.log(`SentientZone energy: ${sentient.energyUsed_kWh.toFixed(2)} kWh`)
   console.log(`Reduction: ${reduction.toFixed(2)}%`)
 }
-

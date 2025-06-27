@@ -35,24 +35,22 @@
  function simulate(isSentient: boolean): SimulationState[] {
    const log: SimulationState[] = []
  
-   let state: SimulationState = {
-     minute: 0,
-     externalTemp: 78,
-     hvacOn: false,
-     energyUsed_kWh: 0,
-     rooms: Object.fromEntries(
-       ROOMS.map((room) => [
-         room,
-         {
-           temp: 72,
-           occupied: false,
-           targetTemp: 72,
-           comfortViolations: 0,
-           runtimeMinutes: 0,
-         },
-       ])
-     ) as Record<Room, RoomState>,
-   }
+  let state: SimulationState = {
+    minute: 0,
+    externalTemp: 78,
+    hvacOn: false,
+    energyUsed_kWh: 0,
+    rooms: ROOMS.reduce((acc, room) => {
+      acc[room] = {
+        temp: 72,
+        occupied: false,
+        targetTemp: 72,
+        comfortViolations: 0,
+        runtimeMinutes: 0,
+      }
+      return acc
+    }, {} as Record<Room, RoomState>),
+  }
  
    for (let i = 0; i < TOTAL_MINUTES; i++) {
      state.minute = i
